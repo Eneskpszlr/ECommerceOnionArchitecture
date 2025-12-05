@@ -1,11 +1,7 @@
-﻿using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.ReadResults.AppUserProfileResults;
+﻿using OnionVb02.Application.CqrsAndMediatr.CQRS.Queries.AppUserProfileQueries;
+using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.ReadResults.AppUserProfileResults;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Read.AppUserProfileProfiles
 {
@@ -17,7 +13,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Read.AppUserProfile
         {
             _repository = repository;
         }
-        public async Task<List<GetAppUserProfileQueryResult>> Handle()
+        public async Task<List<GetAppUserProfileQueryResult>> Handle(GetAppUserProfileQuery query)
         {
             List<AppUserProfile> values = await _repository.GetAllAsync();
 

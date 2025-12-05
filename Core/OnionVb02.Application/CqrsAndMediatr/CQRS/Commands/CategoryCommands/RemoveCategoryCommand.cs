@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.CategoryCommands
 {
-    public class RemoveCategoryCommand : IRequest<RemoveCategoryCommandResult>
+    public class RemoveCategoryCommand
     {
         public int Id { get; set; }
 

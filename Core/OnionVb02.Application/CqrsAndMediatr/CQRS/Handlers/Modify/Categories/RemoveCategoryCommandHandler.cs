@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.Categories
 {
-    public class RemoveCategoryCommandHandler : IRequestHandler<RemoveCategoryCommand, RemoveCategoryCommandResult>
+    public class RemoveCategoryCommandHandler
     {
         private readonly ICategoryRepository _repository;
 
@@ -20,7 +20,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.Categories
             _repository = repository;
         }
 
-        public async Task<RemoveCategoryCommandResult> Handle(RemoveCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<RemoveCategoryCommandResult> Handle(RemoveCategoryCommand request)
         {
             try
             {

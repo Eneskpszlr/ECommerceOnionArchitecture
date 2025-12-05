@@ -3,7 +3,7 @@ using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.OrderResult
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.OrderCommands
 {
-    public class RemoveOrderCommand : IRequest<UpdateOrderCommandResult>
+    public class RemoveOrderCommand
     {
         public RemoveOrderCommand(int id)
         {

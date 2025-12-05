@@ -3,7 +3,7 @@ using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.AppUserProf
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.AppUserProfileCommands
 {
-    public class RemoveAppUserProfileCommand : IRequest<RemoveAppUserProfileCommandResult>
+    public class RemoveAppUserProfileCommand
     {
         public RemoveAppUserProfileCommand(int id)
         {

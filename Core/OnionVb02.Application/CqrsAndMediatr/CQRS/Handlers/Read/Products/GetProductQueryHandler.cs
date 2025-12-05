@@ -1,4 +1,5 @@
-﻿using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.ReadResults.ProductResults;
+﻿using OnionVb02.Application.CqrsAndMediatr.CQRS.Queries.ProductQueries;
+using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.ReadResults.ProductResults;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
 
@@ -12,7 +13,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Read.Products
         {
             _repository = repository;
         }
-        public async Task<List<GetProductQueryResult>> Handle()
+        public async Task<List<GetProductQueryResult>> Handle(GetProductQuery query)
         {
             List<Product> values = await _repository.GetAllAsync();
 

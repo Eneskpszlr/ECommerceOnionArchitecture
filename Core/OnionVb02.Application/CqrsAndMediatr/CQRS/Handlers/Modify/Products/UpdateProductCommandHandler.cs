@@ -1,12 +1,10 @@
-﻿using MediatR;
-using OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.ProductCommands;
+﻿using OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.ProductCommands;
 using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.ProductResults;
 using OnionVb02.Contract.RepositoryInterfaces;
-using OnionVb02.Domain.Entities;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.Products
 {
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, UpdateProductCommandResult>
+    public class UpdateProductCommandHandler
     {
         private readonly IProductRepository _repository;
         public UpdateProductCommandHandler(IProductRepository repository)
@@ -14,7 +12,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.Products
             _repository = repository;
         }
 
-        public async Task<UpdateProductCommandResult> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateProductCommandResult> Handle(UpdateProductCommand request)
         {
             try
             {

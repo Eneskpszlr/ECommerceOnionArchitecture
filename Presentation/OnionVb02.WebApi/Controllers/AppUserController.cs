@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Commands.AppUserCommands;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Queries.AppUserQueries;
-using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.AppUserResults;
+using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.ReadResults.AppUserResults;
 using OnionVb02.Domain.Entities;
 
 namespace OnionVb02.WebApi.Controllers

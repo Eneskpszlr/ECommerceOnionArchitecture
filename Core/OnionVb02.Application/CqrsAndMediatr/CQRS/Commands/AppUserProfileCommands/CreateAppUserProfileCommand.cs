@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.AppUserProfileCommands
 {
-    public class CreateAppUserProfileCommand : IRequest<CreateAppUserProfileCommandResult>
+    public class CreateAppUserProfileCommand
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

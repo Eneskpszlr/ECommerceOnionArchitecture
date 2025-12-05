@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.AppUsers
 {
-    public class CreateAppUserCommandHandler : IRequestHandler<CreateAppUserCommand, CreateAppUserCommandResult>
+    public class CreateAppUserCommandHandler
     {
         private readonly IAppUserRepository _repository;
 
@@ -22,7 +22,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.AppUsers
             _repository = repository;
         }
 
-        public async Task<CreateAppUserCommandResult> Handle(CreateAppUserCommand request, CancellationToken cancellationToken)
+        public async Task<CreateAppUserCommandResult> Handle(CreateAppUserCommand request)
         {
             try
             {

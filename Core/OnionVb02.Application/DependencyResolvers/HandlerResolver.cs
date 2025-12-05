@@ -14,13 +14,7 @@ namespace OnionVb02.Application.DependencyResolvers
     {
         public static void AddHandlerService(this IServiceCollection services)
         {
-            services.AddScoped<GetCategoryQueryHandler>();
-            services.AddScoped<GetCategoryByIdQueryHandler>();
-            services.AddScoped<CreateCategoryCommandHandler>();
-            services.AddScoped<UpdateCategoryCommandHandler>();
-            services.AddScoped<RemoveCategoryCommandHandler>();
-
-            services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(GetCategoryByIdQueryHandler).Assembly));
+            services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(HandlerResolver).Assembly));
         }
     }
 }

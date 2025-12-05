@@ -7,27 +7,15 @@ using OnionVb02.Domain.Entities;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.AppUserProfiles
 {
-    public class UpdateAppUserProfileCommandHandler : IRequestHandler<UpdateAppUserProfileCommand, UpdateAppUserProfileCommandResult>
+    public class UpdateAppUserProfileCommandHandler
     {
         private readonly IAppUserProfileRepository _repository;
         public UpdateAppUserProfileCommandHandler(IAppUserProfileRepository repository)
         {
             _repository = repository;
         }
-        public async Task Handle(UpdateAppUserProfileCommand command)
-        {
-            AppUserProfile value = await _repository.GetByIdAsync(command.Id);
 
-            value.FirstName = command.FirstName;
-            value.AppUserId = command.AppUserId;
-            value.LastName = command.LastName;
-            value.UpdatedDate = DateTime.Now;
-            value.Status = Domain.Enums.DataStatus.Updated;
-            await _repository.SaveChangesAsync();
-
-        }
-
-        public async Task<UpdateAppUserProfileCommandResult> Handle(UpdateAppUserProfileCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateAppUserProfileCommandResult> Handle(UpdateAppUserProfileCommand request)
         {
             try
             {

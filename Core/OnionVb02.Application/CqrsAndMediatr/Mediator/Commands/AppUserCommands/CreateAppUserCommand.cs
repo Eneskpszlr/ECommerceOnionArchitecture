@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.WriteResults.AppUserResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Commands.AppUserCommands
 {
     
     //Burada dikkat ettiyseniz Command'leriniz bir istekten sonra bir response döndürme amacında olmadıkları icinde generic olmayan IRequest tipinden miras almaktadır...Eger command'leriniz bir Result(response) döndürmek isteselerdi onlara ayrı class acılacaktı ve IRequest tipiniz de generic argüman olarak o class tipini alacaktı...
-    public class CreateAppUserCommand : IRequest
+    public class CreateAppUserCommand : IRequest<CreateAppUserCommandResult>
     {
         public string UserName { get; set; }
         public string Password { get; set; }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.ProductCommands
 {
 
-    public class CreateProductCommand : IRequest<CreateProductCommandResult>
+    public class CreateProductCommand
     {
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }

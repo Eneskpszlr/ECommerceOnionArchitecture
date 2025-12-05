@@ -1,19 +1,12 @@
 ﻿using MediatR;
 using OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.OrderCommands;
 using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.OrderResults;
-using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.OrderDetailResults;
-using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.OrderResults;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.Orders
 {
-    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, CreateOrderCommandResult>
+    public class CreateOrderCommandHandler
     {
         private readonly IOrderRepository _repository;
 
@@ -22,7 +15,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.Orders
             _repository = repository;
         }
 
-        public async Task<CreateOrderCommandResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public async Task<CreateOrderCommandResult> Handle(CreateOrderCommand request)
         {
             try
             {

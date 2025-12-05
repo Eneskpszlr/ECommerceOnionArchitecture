@@ -3,7 +3,7 @@ using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.AppUserResu
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.AppUserCommands
 {
-    public class UpdateAppUserCommand : IRequest<UpdateAppUserCommandResult>
+    public class UpdateAppUserCommand
     {
         public int Id { get; set; }
         public string UserName { get; set; }

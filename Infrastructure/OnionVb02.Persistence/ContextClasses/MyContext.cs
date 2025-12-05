@@ -13,7 +13,6 @@ namespace OnionVb02.Persistence.ContextClasses
         public MyContext(DbContextOptions<MyContext> options) : base(options)
         {
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -24,7 +23,5 @@ namespace OnionVb02.Persistence.ContextClasses
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
         }
-
-     
     }
 }

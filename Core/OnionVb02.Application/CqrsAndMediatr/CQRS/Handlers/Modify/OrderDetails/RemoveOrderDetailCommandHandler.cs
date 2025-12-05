@@ -6,20 +6,15 @@ using OnionVb02.Domain.Entities;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.OrderDetails
 {
-    public class RemoveOrderDetailCommandHandler : IRequestHandler<RemoveOrderDetailCommand, RemoveOrderDetailCommandResult>
+    public class RemoveOrderDetailCommandHandler
     {
         private readonly IOrderDetailRepository _repository;
         public RemoveOrderDetailCommandHandler(IOrderDetailRepository repository)
         {
             _repository = repository;
         }
-        public async Task Handle(RemoveOrderDetailCommand command)
-        {
-            OrderDetail value = await _repository.GetByIdAsync(command.Id);
-            await _repository.DeleteAsync(value);
-        }
 
-        public async Task<RemoveOrderDetailCommandResult> Handle(RemoveOrderDetailCommand request, CancellationToken cancellationToken)
+        public async Task<RemoveOrderDetailCommandResult> Handle(RemoveOrderDetailCommand request)
         {
             try
             {

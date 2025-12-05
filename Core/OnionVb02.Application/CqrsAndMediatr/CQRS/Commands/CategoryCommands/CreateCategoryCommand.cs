@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.CategoryCommands
 {
-    public class CreateCategoryCommand : IRequest<CreateCategoryCommandResult>
+    public class CreateCategoryCommand
     {
         public string CategoryName { get; set; }
         public string Description { get; set; }

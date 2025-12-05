@@ -6,7 +6,7 @@ using OnionVb02.Domain.Entities;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.AppUsers
 {
-    public class UpdateAppUserCommandHandler : IRequestHandler<UpdateAppUserCommand, UpdateAppUserCommandResult>
+    public class UpdateAppUserCommandHandler
     {
         private readonly IAppUserRepository _repository;
         public UpdateAppUserCommandHandler(IAppUserRepository repository)
@@ -14,7 +14,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.AppUsers
             _repository = repository;
         }
 
-        public async Task<UpdateAppUserCommandResult> Handle(UpdateAppUserCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateAppUserCommandResult> Handle(UpdateAppUserCommand request)
         {
             try
             {

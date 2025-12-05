@@ -1,13 +1,10 @@
-﻿using MediatR;
-using OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.OrderDetailCommands;
-using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.OrderDetailResults;
+﻿using OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.OrderDetailCommands;
 using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.OrderDetailResults;
 using OnionVb02.Contract.RepositoryInterfaces;
-using OnionVb02.Domain.Entities;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.OrderDetails
 {
-    public class UpdateOrderDetailCommandHandler : IRequestHandler<UpdateOrderDetailCommand, UpdateOrderDetailCommandResult>
+    public class UpdateOrderDetailCommandHandler
     {
         private readonly IOrderDetailRepository _repository;
         public UpdateOrderDetailCommandHandler(IOrderDetailRepository repository)
@@ -15,7 +12,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.OrderDetails
             _repository = repository;
         }
 
-        public async Task<UpdateOrderDetailCommandResult> Handle(UpdateOrderDetailCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateOrderDetailCommandResult> Handle(UpdateOrderDetailCommand request)
         {
             try
             {

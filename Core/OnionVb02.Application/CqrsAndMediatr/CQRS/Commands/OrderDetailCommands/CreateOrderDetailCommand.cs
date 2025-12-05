@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.OrderDetailCommands
 {
-    public class CreateOrderDetailCommand : IRequest<CreateOrderDetailCommandResult>
+    public class CreateOrderDetailCommand
     {
         public int OrderId { get; set; }
         public int ProductId { get; set; }

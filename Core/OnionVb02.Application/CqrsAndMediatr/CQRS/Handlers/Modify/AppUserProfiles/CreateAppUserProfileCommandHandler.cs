@@ -1,19 +1,12 @@
 ﻿using MediatR;
 using OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.AppUserProfileCommands;
-using OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.AppUserProfileCommands;
-using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.AppUserProfileResults;
 using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.AppUserProfileResults;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.AppUserProfiles
 {
-    public class CreateAppUserProfileCommandHandler : IRequestHandler<CreateAppUserProfileCommand, CreateAppUserProfileCommandResult>
+    public class CreateAppUserProfileCommandHandler
     {
         private readonly IAppUserProfileRepository _repository;
 
@@ -21,7 +14,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.AppUserProfi
         {
             _repository = repository;
         }
-        public async Task<CreateAppUserProfileCommandResult> Handle(CreateAppUserProfileCommand command, CancellationToken cancellationToken)
+        public async Task<CreateAppUserProfileCommandResult> Handle(CreateAppUserProfileCommand command)
         {
             try
             {

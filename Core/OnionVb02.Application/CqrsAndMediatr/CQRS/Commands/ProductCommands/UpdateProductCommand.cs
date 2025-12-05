@@ -3,7 +3,7 @@ using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.ProductResu
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.ProductCommands
 {
-    public class UpdateProductCommand : IRequest<UpdateProductCommandResult>
+    public class UpdateProductCommand
     {
         public int Id { get; set; }
         public string ProductName { get; set; }

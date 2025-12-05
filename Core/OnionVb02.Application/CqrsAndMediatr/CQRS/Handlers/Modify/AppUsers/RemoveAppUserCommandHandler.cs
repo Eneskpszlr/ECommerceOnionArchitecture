@@ -7,20 +7,15 @@ using OnionVb02.Domain.Entities;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.AppUsers
 {
-    public class RemoveAppUserCommandHandler : IRequestHandler<RemoveAppUserCommand, RemoveAppUserCommandResult>
+    public class RemoveAppUserCommandHandler
     {
         private readonly IAppUserRepository _repository;
         public RemoveAppUserCommandHandler(IAppUserRepository repository)
         {
             _repository = repository;
         }
-        public async Task Handle(RemoveAppUserCommand command)
-        {
-            AppUser appUser = await _repository.GetByIdAsync(command.Id);
-            await _repository.DeleteAsync(appUser);
-        }
 
-        public async Task<RemoveAppUserCommandResult> Handle(RemoveAppUserCommand request, CancellationToken cancellationToken)
+        public async Task<RemoveAppUserCommandResult> Handle(RemoveAppUserCommand request)
         {
             try
             {

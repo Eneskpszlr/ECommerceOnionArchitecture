@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.AppUserResults;
+using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.ReadResults.AppUserResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
