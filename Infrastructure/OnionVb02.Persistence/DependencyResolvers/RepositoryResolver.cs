@@ -16,7 +16,6 @@ namespace OnionVb02.Persistence.DependencyResolvers
         {
             //services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>)); //Eger BaseRepository class'ınız abstract degilse ve generic ise ve bununla birlikte onu middleware servislerine eklemek istiyorsanız bu ifadeyi kullanırsınız...
 
-
             services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddScoped<IAppUserProfileRepository,AppUserProfileRepository>();
             services.AddScoped<ICategoryRepository,CategoryRepository>();

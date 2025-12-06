@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Queries.OrderDetailQueries;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.ReadResults.OrderDetailResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
 
@@ -17,7 +18,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Read.OrderDetai
         {
             OrderDetail value = await _repository.GetByIdAsync(request.Id);
             if (value == null)
-                return null;
+                throw new NotFoundException("Sipariş Detayı bulunamadı");
             return new GetOrderDetailByIdQueryResult
             {
                 Id = value.Id,

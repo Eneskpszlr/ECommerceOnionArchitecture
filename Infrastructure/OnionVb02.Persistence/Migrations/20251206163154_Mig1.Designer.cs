@@ -12,7 +12,7 @@ using OnionVb02.Persistence.ContextClasses;
 namespace OnionVb02.Persistence.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20251203115352_Mig1")]
+    [Migration("20251206163154_Mig1")]
     partial class Mig1
     {
         /// <inheritdoc />
@@ -44,7 +44,8 @@ namespace OnionVb02.Persistence.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -54,11 +55,12 @@ namespace OnionVb02.Persistence.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppUser");
+                    b.ToTable("AppUsers");
                 });
 
             modelBuilder.Entity("OnionVb02.Domain.Entities.AppUserProfile", b =>
@@ -80,11 +82,13 @@ namespace OnionVb02.Persistence.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -97,7 +101,7 @@ namespace OnionVb02.Persistence.Migrations
                     b.HasIndex("AppUserId")
                         .IsUnique();
 
-                    b.ToTable("AppUserProfile");
+                    b.ToTable("AppUserProfiles");
                 });
 
             modelBuilder.Entity("OnionVb02.Domain.Entities.Category", b =>
@@ -110,7 +114,8 @@ namespace OnionVb02.Persistence.Migrations
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -120,7 +125,8 @@ namespace OnionVb02.Persistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -130,7 +136,7 @@ namespace OnionVb02.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("OnionVb02.Domain.Entities.Order", b =>
@@ -142,6 +148,7 @@ namespace OnionVb02.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AppUserId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -152,7 +159,8 @@ namespace OnionVb02.Persistence.Migrations
 
                     b.Property<string>("ShippingAddress")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -164,7 +172,7 @@ namespace OnionVb02.Persistence.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("OnionVb02.Domain.Entities.OrderDetail", b =>
@@ -200,7 +208,7 @@ namespace OnionVb02.Persistence.Migrations
                     b.HasIndex("OrderId", "ProductId")
                         .IsUnique();
 
-                    b.ToTable("OrderDetail");
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("OnionVb02.Domain.Entities.Product", b =>
@@ -212,6 +220,7 @@ namespace OnionVb02.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -222,12 +231,14 @@ namespace OnionVb02.Persistence.Migrations
 
                     b.Property<string>("ProductName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<decimal>("UnitPrice")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("UpdatedDate")
@@ -237,7 +248,7 @@ namespace OnionVb02.Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("OnionVb02.Domain.Entities.AppUserProfile", b =>
@@ -255,7 +266,9 @@ namespace OnionVb02.Persistence.Migrations
                 {
                     b.HasOne("OnionVb02.Domain.Entities.AppUser", "AppUser")
                         .WithMany("Orders")
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
                 });
@@ -283,7 +296,9 @@ namespace OnionVb02.Persistence.Migrations
                 {
                     b.HasOne("OnionVb02.Domain.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Queries.AppUserQueries;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.ReadResults.AppUserResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
 using System;
@@ -23,6 +24,10 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Read.AppUsers
         public async Task<GetAppUserByIdQueryResult> Handle(GetAppUserByIdQuery request, CancellationToken cancellationToken)
         {
             AppUser value = await _repository.GetByIdAsync(request.Id);
+
+            if (value == null)
+                throw new NotFoundException("Kullanıcı bulunamadı");
+
             return new GetAppUserByIdQueryResult
             {
                 Id = value.Id,

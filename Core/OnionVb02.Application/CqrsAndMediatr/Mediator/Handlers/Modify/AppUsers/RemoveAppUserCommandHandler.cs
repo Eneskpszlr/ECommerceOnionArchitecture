@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Commands.AppUserCommands;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.WriteResults.AppUserResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
 using System;
@@ -22,38 +23,17 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Modify.AppUsers
 
         public async Task<RemoveAppUserCommandResult> Handle(RemoveAppUserCommand request, CancellationToken cancellationToken)
         {
-            try
+            var value = await _repository.GetByIdAsync(request.Id);
+
+            if (value == null)
+                throw new NotFoundException("Kullanıcı bulunamadı.");
+
+            await _repository.DeleteAsync(value);
+
+            return new RemoveAppUserCommandResult
             {
-                var value = await _repository.GetByIdAsync(request.Id);
-
-                if (value == null)
-                {
-                    return new RemoveAppUserCommandResult
-                    {
-                        Success = false,
-                        Message = "Kullanıcı bulunamadı.",
-                        Errors = new List<string> { "Invalid User Id" }
-                    };
-                }
-
-                await _repository.DeleteAsync(value);
-
-                return new RemoveAppUserCommandResult
-                {
-                    Success = true,
-                    Message = "Kullanıcı başarıyla silindi.",
-                    EntityId = request.Id
-                };
-            }
-            catch (Exception ex)
-            {
-                return new RemoveAppUserCommandResult
-                {
-                    Success = false,
-                    Message = "Silme sırasında bir hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
+                EntityId = request.Id
+            };
         }
     }
 }

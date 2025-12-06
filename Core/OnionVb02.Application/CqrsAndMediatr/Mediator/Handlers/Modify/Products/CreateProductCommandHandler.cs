@@ -22,34 +22,20 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Modify.Products
 
         public async Task<CreateProductCommandResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            try
+            var product = new Product
             {
-                var product = new Product
-                {
-                    ProductName = request.ProductName,
-                    UnitPrice = request.UnitPrice,
-                    CreatedDate = DateTime.Now,
-                    Status = Domain.Enums.DataStatus.Inserted
-                };
+                ProductName = request.ProductName,
+                UnitPrice = request.UnitPrice,
+                CreatedDate = DateTime.Now,
+                Status = Domain.Enums.DataStatus.Inserted
+            };
 
-                await _repository.CreateAsync(product);
+            await _repository.CreateAsync(product);
 
-                return new CreateProductCommandResult
-                {
-                    Success = true,
-                    Message = "Ürün başarıyla oluşturuldu.",
-                    EntityId = product.Id
-                };
-            }
-            catch (Exception ex)
+            return new CreateProductCommandResult
             {
-                return new CreateProductCommandResult
-                {
-                    Success = false,
-                    Message = "Ürün oluşturulurken hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
+                EntityId = product.Id
+            };
         }
     }
 }

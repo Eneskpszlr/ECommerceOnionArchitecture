@@ -1,5 +1,6 @@
 ﻿using OnionVb02.Application.CqrsAndMediatr.CQRS.Queries.ProductQueries;
 using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.ReadResults.ProductResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
 
@@ -16,6 +17,9 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Read.Products
         public async Task<List<GetProductQueryResult>> Handle(GetProductQuery query)
         {
             List<Product> values = await _repository.GetAllAsync();
+
+            if (values == null)
+                throw new NotFoundException("Ürün bulunamadı");
 
             return values.Select(x => new GetProductQueryResult
             {

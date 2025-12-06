@@ -3,7 +3,7 @@ using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.ReadResults.ProductR
 
 namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Queries.ProductQueries
 {
-    public class GetProductByIdQuery : IRequest<GetProductQueryResult>
+    public class GetProductByIdQuery : IRequest<GetProductByIdQueryResult>
     {
         public GetProductByIdQuery(int id)
         {

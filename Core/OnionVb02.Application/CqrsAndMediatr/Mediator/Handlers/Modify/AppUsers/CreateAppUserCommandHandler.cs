@@ -23,34 +23,20 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Modify.AppUsers
 
         public async Task<CreateAppUserCommandResult> Handle(CreateAppUserCommand request, CancellationToken cancellationToken)
         {
-            try
+            var entity = new AppUser
             {
-                var entity = new AppUser
-                {
-                    UserName = request.UserName,
-                    Password = request.Password,
-                    CreatedDate = DateTime.Now,
-                    Status = DataStatus.Inserted
-                };
+                UserName = request.UserName,
+                Password = request.Password,
+                CreatedDate = DateTime.Now,
+                Status = DataStatus.Inserted
+            };
 
-                await _repository.CreateAsync(entity);
+            await _repository.CreateAsync(entity);
 
-                return new CreateAppUserCommandResult
-                {
-                    Success = true,
-                    Message = "Kullanıcı başarıyla oluşturuldu.",
-                    EntityId = entity.Id
-                };
-            }
-            catch (Exception ex)
+            return new CreateAppUserCommandResult
             {
-                return new CreateAppUserCommandResult
-                {
-                    Success = false,
-                    Message = "Kullanıcı oluşturulurken hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
+                EntityId = entity.Id
+            };
         }
     }
 }

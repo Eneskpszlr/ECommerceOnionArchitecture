@@ -1,4 +1,4 @@
-﻿namespace OnionVb02.WebApi.RequestModels.Categories
+﻿namespace OnionVb02.PresentationContract.RequestModels.Categories
 {
     public class CreateCategoryRequestModel
     {

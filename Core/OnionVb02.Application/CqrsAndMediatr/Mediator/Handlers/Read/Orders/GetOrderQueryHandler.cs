@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Queries.OrderQueries;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.ReadResults.OrderResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
 
@@ -18,6 +19,8 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Read.Orders
         public async Task<List<GetOrderQueryResult>> Handle(GetOrderQuery request, CancellationToken cancellationToken)
         {
             List<Order> values = await _repository.GetAllAsync();
+            if (values == null)
+                throw new NotFoundException("Sipariş bulunamadı");
             return values.Select(x => new GetOrderQueryResult
             {
                 Id = x.Id,

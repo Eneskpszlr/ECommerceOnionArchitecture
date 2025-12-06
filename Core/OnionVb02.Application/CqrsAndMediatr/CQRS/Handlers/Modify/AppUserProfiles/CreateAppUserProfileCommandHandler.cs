@@ -16,34 +16,21 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.AppUserProfi
         }
         public async Task<CreateAppUserProfileCommandResult> Handle(CreateAppUserProfileCommand command)
         {
-            try
+            var profile = new AppUserProfile
             {
-                var appUserProfile = new AppUserProfile
-                {
-                    FirstName = command.FirstName,
-                    LastName = command.LastName,
-                    CreatedDate = DateTime.Now,
-                    Status = Domain.Enums.DataStatus.Inserted
-                };
+                FirstName = command.FirstName,
+                LastName = command.LastName,
+                AppUserId = command.AppUserId,
+                CreatedDate = DateTime.Now,
+                Status = Domain.Enums.DataStatus.Inserted
+            };
 
-                await _repository.CreateAsync(appUserProfile);
+            await _repository.CreateAsync(profile);
 
-                return new CreateAppUserProfileCommandResult
-                {
-                    Success = true,
-                    Message = "Kullanıcı profili başarıyla oluşturuldu.",
-                    EntityId = appUserProfile.Id
-                };
-            }
-            catch (Exception ex)
+            return new CreateAppUserProfileCommandResult
             {
-                return new CreateAppUserProfileCommandResult
-                {
-                    Success = false,
-                    Message = "Kullanıcı profili oluşturulurken hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
+                EntityId = profile.Id
+            };
         }
     }
 }

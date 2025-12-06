@@ -23,34 +23,20 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.Categories
 
         public async Task<CreateCategoryCommandResult> Handle(CreateCategoryCommand command)
         {
-            try
+            var category = new Category
             {
-                var category = new Category
-                {
-                    CategoryName = command.CategoryName,
-                    Description = command.Description,
-                    CreatedDate = DateTime.Now,
-                    Status = Domain.Enums.DataStatus.Inserted
-                };
+                CategoryName = command.CategoryName,
+                Description = command.Description,
+                CreatedDate = DateTime.Now,
+                Status = Domain.Enums.DataStatus.Inserted
+            };
 
-                await _repository.CreateAsync(category);
+            await _repository.CreateAsync(category);
 
-                return new CreateCategoryCommandResult
-                {
-                    Success = true,
-                    Message = "Kategori başarıyla oluşturuldu.",
-                    EntityId = category.Id
-                };
-            }
-            catch (Exception ex)
+            return new CreateCategoryCommandResult
             {
-                return new CreateCategoryCommandResult
-                {
-                    Success = false,
-                    Message = "Kategori oluşturulurken hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
+                EntityId = category.Id
+            };
         }
     }
 }

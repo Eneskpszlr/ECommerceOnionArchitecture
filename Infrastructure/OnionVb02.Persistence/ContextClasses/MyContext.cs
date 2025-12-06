@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnionVb02.Domain.Entities;
 using OnionVb02.Persistence.Configurations;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,14 @@ namespace OnionVb02.Persistence.ContextClasses
         public MyContext(DbContextOptions<MyContext> options) : base(options)
         {
         }
+
+        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<AppUserProfile> AppUserProfiles { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

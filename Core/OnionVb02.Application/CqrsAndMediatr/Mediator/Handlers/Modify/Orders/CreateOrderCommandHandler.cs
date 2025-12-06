@@ -21,34 +21,20 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Modify.Orders
 
         public async Task<CreateOrderCommandResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            try
+            var order = new Order
             {
-                var order = new Order
-                {
-                    ShippingAddress = request.ShippingAddress,
-                    AppUserId = request.AppUserId,
-                    CreatedDate = DateTime.Now,
-                    Status = Domain.Enums.DataStatus.Inserted
-                };
+                ShippingAddress = request.ShippingAddress,
+                AppUserId = request.AppUserId,
+                CreatedDate = DateTime.Now,
+                Status = Domain.Enums.DataStatus.Inserted
+            };
 
-                await _repository.CreateAsync(order);
+            await _repository.CreateAsync(order);
 
-                return new CreateOrderCommandResult
-                {
-                    Success = true,
-                    Message = "Sipariş başarıyla oluşturuldu.",
-                    EntityId = order.Id
-                };
-            }
-            catch (Exception ex)
+            return new CreateOrderCommandResult
             {
-                return new CreateOrderCommandResult
-                {
-                    Success = false,
-                    Message = "Sipariş oluşturulurken hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
+                EntityId = order.Id
+            };
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Queries.ProductQueries;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.ReadResults.ProductResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Read.Products
         public async Task<List<GetProductQueryResult>> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
             var values = await _repository.GetAllAsync();
+            if (values == null)
+                throw new NotFoundException("Ürün bulunamadı");
             return values.Select(x => new GetProductQueryResult
             {
                 Id = x.Id,

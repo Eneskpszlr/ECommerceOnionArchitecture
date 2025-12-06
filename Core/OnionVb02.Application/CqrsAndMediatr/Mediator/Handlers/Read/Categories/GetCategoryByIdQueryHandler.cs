@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Queries.CategoryQueries;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.ReadResults.CategoryResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
 
@@ -16,10 +17,10 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Read.Categories
         public async Task<GetCategoryByIdQueryResult> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
             Category value = await _repository.GetByIdAsync(request.Id);
+
             if (value == null)
-            {
-                return null!;
-            }
+                throw new NotFoundException("Kategori bulunamadı");
+
             return new GetCategoryByIdQueryResult
             {
                 Id = value.Id,

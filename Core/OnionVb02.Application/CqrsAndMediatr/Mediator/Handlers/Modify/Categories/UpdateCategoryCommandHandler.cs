@@ -1,8 +1,10 @@
 ﻿using MediatR;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Commands.CategoryCommands;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.WriteResults.CategoryResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Enums;
+using OnionVb02.Domain.Interfaces;
 
 namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Modify.Categories
 {
@@ -15,39 +17,18 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Modify.Categori
         }
         public async Task<UpdateCategoryCommandResult> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
-            try
+            var value = await _repository.GetByIdAsync(request.Id);
+            if (value == null)
+                throw new NotFoundException("Kategori bulunamadı.");
+            value.CategoryName = request.CategoryName;
+            value.Description = request.Description;
+            value.Status = DataStatus.Updated;
+            value.UpdatedDate = DateTime.Now;
+            await _repository.SaveChangesAsync();
+            return new UpdateCategoryCommandResult
             {
-                var value = await _repository.GetByIdAsync(request.Id);
-                if (value == null)
-                {
-                    return new UpdateCategoryCommandResult
-                    {
-                        Success = false,
-                        Message = "Kategori bulunamadı.",
-                        Errors = new List<string> { "Invalid Category Id" }
-                    };
-                }
-                value.CategoryName = request.CategoryName;
-                value.Description = request.Description;
-                value.Status = DataStatus.Updated;
-                value.UpdatedDate = DateTime.Now;
-                await _repository.SaveChangesAsync();
-                return new UpdateCategoryCommandResult
-                {
-                    Success = true,
-                    Message = "Kategori başarıyla güncellendi.",
-                    EntityId = value.Id
-                };
-            }
-            catch (Exception ex)
-            {
-                return new UpdateCategoryCommandResult
-                {
-                    Success = false,
-                    Message = "Güncelleme sırasında bir hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
+                EntityId = value.Id
+            };
         }
     }
 }

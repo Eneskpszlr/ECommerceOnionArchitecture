@@ -1,5 +1,6 @@
 ﻿using OnionVb02.Application.CqrsAndMediatr.CQRS.Queries.OrderDetailQueries;
 using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.ReadResults.OrderDetailResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
 
@@ -18,6 +19,10 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Read.OrderDetails
         {
 
             OrderDetail value = await _repository.GetByIdAsync(query.Id);
+
+            if (value == null)
+                throw new NotFoundException("Sipariş detayı bulunamadı");
+
             return new GetOrderDetailByIdQueryResult
             {
                 ProductId = value.ProductId,

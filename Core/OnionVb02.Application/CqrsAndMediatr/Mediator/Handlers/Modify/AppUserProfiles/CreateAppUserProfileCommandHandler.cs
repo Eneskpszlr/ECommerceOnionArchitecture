@@ -24,34 +24,20 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Modify.AppUserP
 
         public async Task<CreateAppUserProfileCommandResult> Handle(CreateAppUserProfileCommand request, CancellationToken cancellationToken)
         {
-            try
+            var entity = new AppUserProfile
             {
-                var entity = new AppUserProfile
-                {
-                    FirstName = request.FirstName,
-                    LastName = request.LastName,
-                    CreatedDate = DateTime.Now,
-                    Status = DataStatus.Inserted
-                };
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                CreatedDate = DateTime.Now,
+                Status = DataStatus.Inserted
+            };
 
-                await _repository.CreateAsync(entity);
+            await _repository.CreateAsync(entity);
 
-                return new CreateAppUserProfileCommandResult
-                {
-                    Success = true,
-                    Message = "Kullanıcı profili başarıyla oluşturuldu.",
-                    EntityId = entity.Id
-                };
-            }
-            catch (Exception ex)
+            return new CreateAppUserProfileCommandResult
             {
-                return new CreateAppUserProfileCommandResult
-                {
-                    Success = false,
-                    Message = "Kullanıcı profili oluşturulurken hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
+                EntityId = entity.Id
+            };
         }
     }
 }

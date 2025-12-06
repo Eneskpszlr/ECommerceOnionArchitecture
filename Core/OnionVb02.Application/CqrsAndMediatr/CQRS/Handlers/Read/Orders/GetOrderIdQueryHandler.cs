@@ -1,5 +1,6 @@
 ﻿using OnionVb02.Application.CqrsAndMediatr.CQRS.Queries.OrderQueries;
 using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.ReadResults.OrderResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
 
@@ -18,6 +19,10 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Read.Orders
         {
 
             Order value = await _repository.GetByIdAsync(query.Id);
+
+            if (value == null)
+                throw new NotFoundException("Sipariş bulunamadı");
+
             return new GetOrderByIdQueryResult
             {
                 ShippingAddress = value.ShippingAddress,

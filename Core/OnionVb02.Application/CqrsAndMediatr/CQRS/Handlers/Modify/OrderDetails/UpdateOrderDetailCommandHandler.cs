@@ -1,5 +1,6 @@
 ﻿using OnionVb02.Application.CqrsAndMediatr.CQRS.Commands.OrderDetailCommands;
 using OnionVb02.Application.CqrsAndMediatr.CQRS.Results.WriteResults.OrderDetailResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 
 namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.OrderDetails
@@ -14,42 +15,22 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.OrderDetails
 
         public async Task<UpdateOrderDetailCommandResult> Handle(UpdateOrderDetailCommand request)
         {
-            try
+            var entity = await _repository.GetByIdAsync(request.Id);
+
+            if (entity == null)
+                throw new NotFoundException("Sipariş detayı bulunamadı.");
+
+            entity.OrderId = entity.OrderId;
+            entity.ProductId = entity.ProductId;
+            entity.UpdatedDate = DateTime.Now;
+            entity.Status = Domain.Enums.DataStatus.Updated;
+
+            await _repository.SaveChangesAsync();
+
+            return new UpdateOrderDetailCommandResult
             {
-                var entity = await _repository.GetByIdAsync(request.Id);
-
-                if (entity == null)
-                {
-                    return new UpdateOrderDetailCommandResult
-                    {
-                        Success = false,
-                        Message = "Sipariş Detayı bulunamadı."
-                    };
-                }
-
-                entity.OrderId = entity.OrderId;
-                entity.ProductId = entity.ProductId;
-                entity.UpdatedDate = DateTime.Now;
-                entity.Status = Domain.Enums.DataStatus.Updated;
-
-                await _repository.SaveChangesAsync();
-
-                return new UpdateOrderDetailCommandResult
-                {
-                    Success = true,
-                    Message = "Sipariş Detayı başarıyla güncellendi.",
-                    EntityId = entity.Id
-                };
-            }
-            catch (Exception ex)
-            {
-                return new UpdateOrderDetailCommandResult
-                {
-                    Success = false,
-                    Message = "Sipariş Detayı güncellenirken hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
+                EntityId = entity.Id
+            };
         }
     }
 }

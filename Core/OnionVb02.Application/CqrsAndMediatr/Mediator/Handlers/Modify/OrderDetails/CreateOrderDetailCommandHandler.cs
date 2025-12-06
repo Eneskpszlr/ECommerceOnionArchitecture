@@ -23,34 +23,20 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Modify.OrderDet
 
         public async Task<CreateOrderDetailCommandResult> Handle(CreateOrderDetailCommand request, CancellationToken cancellationToken)
         {
-            try
+            var entity = new OrderDetail
             {
-                var entity = new OrderDetail
-                {
-                    ProductId = request.ProductId,
-                    OrderId = request.OrderId,
-                    CreatedDate = DateTime.Now,
-                    Status = DataStatus.Inserted
-                };
+                ProductId = request.ProductId,
+                OrderId = request.OrderId,
+                CreatedDate = DateTime.Now,
+                Status = DataStatus.Inserted
+            };
 
-                await _repository.CreateAsync(entity);
+            await _repository.CreateAsync(entity);
 
-                return new CreateOrderDetailCommandResult
-                {
-                    Success = true,
-                    Message = "Sipariş detayı başarıyla oluşturuldu.",
-                    EntityId = entity.Id
-                };
-            }
-            catch (Exception ex)
+            return new CreateOrderDetailCommandResult
             {
-                return new CreateOrderDetailCommandResult
-                {
-                    Success = false,
-                    Message = "Sipariş detayı oluşturulurken hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
+                EntityId = entity.Id
+            };
         }
     }
 }

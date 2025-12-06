@@ -15,8 +15,6 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.OrderDetails
         }
         public async Task<CreateOrderDetailCommandResult> Handle(CreateOrderDetailCommand request)
         {
-            try
-            {
                 var orderDetail = new OrderDetail
                 {
                     ProductId = request.ProductId,
@@ -29,20 +27,8 @@ namespace OnionVb02.Application.CqrsAndMediatr.CQRS.Handlers.Modify.OrderDetails
 
                 return new CreateOrderDetailCommandResult
                 {
-                    Success = true,
-                    Message = "Sipariş Detayı başarıyla oluşturuldu.",
                     EntityId = orderDetail.Id
                 };
-            }
-            catch (Exception ex)
-            {
-                return new CreateOrderDetailCommandResult
-                {
-                    Success = false,
-                    Message = "Sipariş Detayı oluşturulurken hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
         }
     }
 }

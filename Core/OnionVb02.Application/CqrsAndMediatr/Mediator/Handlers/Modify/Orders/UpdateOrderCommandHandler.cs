@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Commands.OrderCommands;
 using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.WriteResults.OrderResults;
+using OnionVb02.Application.Exceptions;
 using OnionVb02.Contract.RepositoryInterfaces;
 using OnionVb02.Domain.Entities;
 
@@ -27,42 +28,22 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Modify.Orders
 
         public async Task<UpdateOrderCommandResult> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
         {
-            try
+            var entity = await _repository.GetByIdAsync(request.Id);
+
+            if (entity == null)
+                throw new NotFoundException("Sipariş bulunamadı.");
+
+            entity.ShippingAddress = request.ShippingAddress;
+            entity.AppUserId = request.AppUserId;
+            entity.UpdatedDate = DateTime.Now;
+            entity.Status = Domain.Enums.DataStatus.Updated;
+
+            await _repository.SaveChangesAsync();
+
+            return new UpdateOrderCommandResult
             {
-                var entity = await _repository.GetByIdAsync(request.Id);
-
-                if (entity == null)
-                {
-                    return new UpdateOrderCommandResult
-                    {
-                        Success = false,
-                        Message = "Sipariş bulunamadı."
-                    };
-                }
-
-                entity.ShippingAddress = request.ShippingAddress;
-                entity.AppUserId = request.AppUserId;
-                entity.UpdatedDate = DateTime.Now;
-                entity.Status = Domain.Enums.DataStatus.Updated;
-
-                await _repository.SaveChangesAsync();
-
-                return new UpdateOrderCommandResult
-                {
-                    Success = true,
-                    Message = "Sipariş başarıyla güncellendi.",
-                    EntityId = entity.Id
-                };
-            }
-            catch (Exception ex)
-            {
-                return new UpdateOrderCommandResult
-                {
-                    Success = false,
-                    Message = "Sipariş güncellenirken hata oluştu.",
-                    Errors = new List<string> { ex.Message }
-                };
-            }
+                EntityId = entity.Id
+            };
         }
     }
 }

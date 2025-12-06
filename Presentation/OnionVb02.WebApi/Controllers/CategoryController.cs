@@ -1,10 +1,9 @@
-﻿using AutoMapper;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OnionVb02.Application.DTOClasses;
-using OnionVb02.Application.ManagerInterfaces;
-using OnionVb02.WebApi.RequestModels.Categories;
-using OnionVb02.WebApi.ResponseModels.Categories;
+using OnionVb02.Application.CqrsAndMediatr.Mediator.Commands.CategoryCommands;
+using OnionVb02.Application.CqrsAndMediatr.Mediator.Queries.CategoryQueries;
+using OnionVb02.Application.CqrsAndMediatr.Mediator.Results.ReadResults.CategoryResults;
 
 namespace OnionVb02.WebApi.Controllers
 {
@@ -12,38 +11,47 @@ namespace OnionVb02.WebApi.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoryManager _categoryManager;
-        private readonly IMapper _mapper;
-        
 
-        public CategoryController(ICategoryManager categoryManager,IMapper mapper)
+        private readonly IMediator _mediator;
+
+        public CategoryController(IMediator mediator)
         {
-            _categoryManager = categoryManager;
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> CategoryList()
         {
-            List<CategoryDto> values = await _categoryManager.GetAllAsync();
-            return Ok(_mapper.Map<List<CategoryResponseModel>>(values));
+            List<GetCategoryQueryResult> categories = await _mediator.Send(new GetCategoryQuery());
+            return Ok(categories);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategory(int id)
         {
-            CategoryDto value = await _categoryManager.GetByIdAsync(id);
-            return Ok(_mapper.Map<CategoryResponseModel>(value));
+            GetCategoryByIdQueryResult value = await _mediator.Send(new GetCategoryByIdQuery(id));
+            return Ok(value);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryRequestModel model)
+        public async Task<IActionResult> CreateCategory(CreateCategoryCommand command)
         {
-            CategoryDto category = _mapper.Map<CategoryDto>(model);
-            await _categoryManager.CreateAsync(category);
+            await _mediator.Send(command);
             return Ok("Veri eklendi");
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateCategory(UpdateCategoryCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok("Veri güncellendi");
+        }
 
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            await _mediator.Send(new RemoveCategoryCommand(id));
+            return Ok("Veri Silindi");
+        }
     }
 }

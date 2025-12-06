@@ -1,6 +1,6 @@
-﻿namespace OnionVb02.WebApi.ResponseModels.Categories
+﻿namespace OnionVb02.PresentationContract.RequestModels.Categories
 {
-    public class CategoryResponseModel
+    public class UpdateCategoryRequestModel
     {
         public int Id { get; set; }
         public string CategoryName { get; set; }
