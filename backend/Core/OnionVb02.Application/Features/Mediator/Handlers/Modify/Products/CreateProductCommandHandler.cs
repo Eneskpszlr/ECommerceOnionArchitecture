@@ -26,6 +26,7 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Modify.Products
             {
                 ProductName = request.ProductName,
                 UnitPrice = request.UnitPrice,
+                CategoryId = request.CategoryId,
                 CreatedDate = DateTime.Now,
                 Status = Domain.Enums.DataStatus.Inserted
             };

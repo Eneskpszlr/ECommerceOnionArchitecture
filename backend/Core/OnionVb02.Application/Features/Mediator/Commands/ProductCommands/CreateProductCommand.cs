@@ -12,6 +12,6 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Commands.ProductCommands
     {
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
     }
 }

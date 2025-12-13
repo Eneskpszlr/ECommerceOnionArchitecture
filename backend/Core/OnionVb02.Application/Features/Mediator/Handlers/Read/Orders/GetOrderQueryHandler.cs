@@ -24,7 +24,8 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Read.Orders
             return values.Select(x => new GetOrderQueryResult
             {
                 Id = x.Id,
-                ShippingAddress = x.ShippingAddress
+                ShippingAddress = x.ShippingAddress,
+                AppUserId = x.AppUserId
             }).ToList();
         }
     }

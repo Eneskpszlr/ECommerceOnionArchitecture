@@ -12,7 +12,7 @@ using OnionVb02.Persistence.ContextClasses;
 namespace OnionVb02.Persistence.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20251206163154_Mig1")]
+    [Migration("20251213185424_Mig1")]
     partial class Mig1
     {
         /// <inheritdoc />
@@ -147,8 +147,7 @@ namespace OnionVb02.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AppUserId")
-                        .IsRequired()
+                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -219,8 +218,7 @@ namespace OnionVb02.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
-                        .IsRequired()
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")

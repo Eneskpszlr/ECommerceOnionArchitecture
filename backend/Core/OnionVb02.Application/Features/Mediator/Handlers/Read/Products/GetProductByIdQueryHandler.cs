@@ -26,7 +26,8 @@ namespace OnionVb02.Application.CqrsAndMediatr.Mediator.Handlers.Read.Products
             {
                 Id = value.Id,
                 ProductName = value.ProductName,
-                UnitPrice = value.UnitPrice
+                UnitPrice = value.UnitPrice,
+                CategoryId = value.CategoryId
             };
         }
     }

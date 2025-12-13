@@ -10,7 +10,7 @@ namespace OnionVb02.Domain.Entities
     {
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
 
         //Relational Properties

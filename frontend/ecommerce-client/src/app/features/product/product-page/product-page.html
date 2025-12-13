@@ -1,1 +1,83 @@
-<p>product-page works!</p>
+<h3>Product List</h3>
+
+<form (submit)="addProduct($event)">
+  <input
+    type="text"
+    placeholder="Ürün Adı"
+    [value]="newProductName()"
+    (input)="onNewProductNameChange($event)"
+  />
+
+  <input
+    type="number"
+    placeholder="Fiyat"
+    [value]="newUnitPrice()"
+    (input)="onNewUnitPriceChange($event)"
+  />
+
+  <input
+    type="number"
+    placeholder="Category Id"
+    [value]="newCategoryId()"
+    (input)="onNewCategoryIdChange($event)"
+  />
+
+  <button type="submit">Ekle</button>
+</form>
+
+<hr />
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Ürün</th>
+      <th>Fiyat</th>
+      <th>CategoryId</th>
+      <th>İşlemler</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let product of products()">
+      <td>{{ product.id }}</td>
+      <td>{{ product.productName }}</td>
+      <td>{{ product.unitPrice }}</td>
+      <td>{{ product.categoryId }}</td>
+      <td>
+        <button (click)="startEdit(product)">Güncelle</button>
+        <button (click)="deleteProduct(product.id)">Sil</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="selectedProduct()">
+  <h4>Seçili Ürün Güncelle</h4>
+
+  <form (submit)="updateProduct($event)">
+    <input
+      type="text"
+      placeholder="Ürün Adı"
+      [value]="editProductName()"
+      (input)="onEditProductNameChange($event)"
+    />
+
+    <input
+      type="number"
+      placeholder="Fiyat"
+      [value]="editUnitPrice()"
+      (input)="onEditUnitPriceChange($event)"
+    />
+
+    <input
+      type="number"
+      placeholder="Category Id"
+      [value]="editCategoryId()"
+      (input)="onEditCategoryIdChange($event)"
+    />
+
+    <button type="submit">Kaydet</button>
+    <button type="button" (click)="cancelEdit()">İptal</button>
+  </form>
+</div>

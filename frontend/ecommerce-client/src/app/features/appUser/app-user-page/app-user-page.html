@@ -1,1 +1,65 @@
-<p>app-user-page works!</p>
+<h3>AppUser List</h3>
+
+<form (submit)="addUser($event)">
+  <input
+    type="text"
+    placeholder="Kullanıcı Adı"
+    [value]="newUserName()"
+    (input)="onNewUserNameChange($event)"
+  />
+
+  <input
+    type="password"
+    placeholder="Şifre"
+    [value]="newPassword()"
+    (input)="onNewPasswordChange($event)"
+  />
+
+  <button type="submit">Ekle</button>
+</form>
+
+<hr />
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Kullanıcı Adı</th>
+      <th>İşlemler</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let user of appUsers()">
+      <td>{{ user.id }}</td>
+      <td>{{ user.userName }}</td>
+      <td>
+        <button (click)="startEdit(user)">Güncelle</button>
+        <button (click)="deleteUser(user.id)">Sil</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="selectedAppUser()">
+  <h4>Kullanıcı Güncelle</h4>
+
+  <form (submit)="updateUser($event)">
+    <input
+      type="text"
+      placeholder="Kullanıcı Adı"
+      [value]="editUserName()"
+      (input)="onEditUserNameChange($event)"
+    />
+
+    <input
+      type="password"
+      placeholder="Yeni Şifre"
+      [value]="editPassword()"
+      (input)="onEditPasswordChange($event)"
+    />
+
+    <button type="submit">Kaydet</button>
+    <button type="button" (click)="cancelEdit()">İptal</button>
+  </form>
+</div>

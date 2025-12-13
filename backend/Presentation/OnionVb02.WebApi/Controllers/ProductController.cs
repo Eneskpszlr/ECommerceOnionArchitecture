@@ -33,14 +33,14 @@ namespace OnionVb02.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(CreateProductCommand command)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommand command)
         {
             await _mediator.Send(command);
             return Ok("Veri eklendi");
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateProduct(UpdateProductCommand command)
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductCommand command)
         {
             await _mediator.Send(command);
             return Ok("Veri güncellendi");
